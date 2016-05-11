@@ -1,0 +1,27 @@
+{
+  "name": "immutable-aatree",
+  "version": "0.4.0",
+  "description": "Persistent AAtree datastructure",
+  "main": "lib/aatree.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alwinb/immutable-aatree.git"
+  },
+  "keywords": [
+    "immutable",
+    "persistent",
+    "aatree",
+    "AAtree",
+    "datastructure",
+    "ordered dictionary"
+  ],
+  "author": "Alwin Blok",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alwinb/immutable-aatree/issues"
+  },
+  "homepage": "https://github.com/alwinb/immutable-aatree#readme"
+}
