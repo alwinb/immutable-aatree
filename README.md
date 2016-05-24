@@ -17,6 +17,5 @@ otherwise see test/test.js
 
 Limitations
 -----------
-* No delete
 * Api might change a bit
 
