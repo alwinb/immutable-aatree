@@ -28,41 +28,39 @@ var store0 = t4
 
 // ## An AATree based on the sample store
 
-var compare = function (a, b) {
-	return a < b ? -1 : a > b ? 1 : 0 }
-
+var compare = AATree.defaultCompare
 var tree = AATree(compare)
 tree._dereify(store0)
 
 
 // ## Test
 
-// tree.lookup(1).unset()._reify()
-// tree.lookup(2).unset()._reify()
-// tree.lookup(3).unset()._reify()
-// tree.lookup(4).unset()._reify()
-// tree.lookup(5).unset()._reify()
-// tree.lookup(6).unset()._reify()
-// tree.lookup(7).unset()._reify()
-// tree.lookup(8).unset()._reify()
-// tree.lookup(9).unset()._reify()
-// tree.lookup(10).unset()._reify()
-// tree.lookup(11).unset()._reify()
-// tree.lookup(12).unset()._reify()
-// tree.lookup(13).unset()._reify()
+// tree.select(1).unset()._reify()
+// tree.select(2).unset()._reify()
+// tree.select(3).unset()._reify()
+// tree.select(4).unset()._reify()
+// tree.select(5).unset()._reify()
+// tree.select(6).unset()._reify()
+// tree.select(7).unset()._reify()
+// tree.select(8).unset()._reify()
+// tree.select(9).unset()._reify()
+// tree.select(10).unset()._reify()
+// tree.select(11).unset()._reify()
+// tree.select(12).unset()._reify()
+// tree.select(13).unset()._reify()
 
-var tree = tree.lookup(1).unset()
+var tree = tree.select(1).unset()
 store1 = tree._reify()
-store2 = tree.lookup(2).unset()._reify()
-store3 = tree.lookup(3).unset()._reify()
-store4 = tree.lookup(4).unset()._reify()
+store2 = tree.select(2).unset()._reify()
+store3 = tree.select(3).unset()._reify()
+store4 = tree.select(4).unset()._reify()
 
 
 function toNode (o) {
 	if (o === EMPTY)
 		return { shape:'point' }
 	if (typeof o === 'object' && 'lv' in o)
-		return { shape:'rect', label:o.k, rank:o.lv, children:['l', 'r'] }
+		return { shape:'record', label:o.k, rank:o.lv, children:['l', 'r'] }
 }
 
 //

@@ -11,17 +11,17 @@ var compare = function (a, b) {
 // -------------------------------
 
 var tree1 = new AATree(compare)
-var cursor = tree1.lookup('key1')
+var cursor = tree1.select('key1')
 console.log(cursor)
 // { found: false, key: 'key1', set: [Function: set] }
 
 var tree2 = cursor.set('value for key1')
-var cursor = tree2.lookup('key1')
+var cursor = tree2.select('key1')
 console.log(cursor)
 // { found: true, key: 'key1', value: 'value for key1', set: [Function: set] }
 
-var tree3 = tree2.lookup('key2').set('value for key2')
-var cursor = tree3.lookup('key2')
+var tree3 = tree2.select('key2').set('value for key2')
+var cursor = tree3.select('key2')
 
 
 // Call a function for each entry in the tree
