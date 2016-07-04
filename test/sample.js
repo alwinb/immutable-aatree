@@ -28,10 +28,7 @@ var store0 = t4
 
 // ## An AATree based on the sample store
 
-var compare = AATree.defaultCompare
-var tree = AATree(compare)
-tree._dereify(store0)
-
+var tree = new AATree (AATree.defaultCompare, AATree._private._fromInternal, store0)
 
 // ## Test
 
