@@ -1,4 +1,6 @@
 var AATree = require('../lib/aatree')
+const log = console.log.bind (console)
+
 
 // Specify a comparison function
 // (This is idiomatic, the same thing Array.sort expects)
@@ -27,13 +29,15 @@ var cursor = tree3.select('key2')
 // Call a function for each entry in the tree
 // ------------------------------------------
 
-tree3.each(function (value, key) { console.log(key, ':', value) })
+log ('\ntest each')
+tree3.each (function (value, key) { console.log(key, ':', value) })
 
 
 
 // Lazy stream of pairs in ascending order
 // ---------------------------------------
 
+log ('\ntest stream')
 var stream = tree3.stream()
 
 do {

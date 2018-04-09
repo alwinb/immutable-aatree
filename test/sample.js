@@ -3,6 +3,19 @@ var AATree = require('../lib/aatree')
 	, EMPTY = AATree._private.EMPTY
 	, viz = require('./dot').dot
 
+const log = console.log.bind (console)
+
+// For debugging only - path to array
+
+function toArray (path) {
+	var r = []
+	while (path != null) {
+		r.unshift (path.branch)
+		r.unshift (path.node.k)
+		path = path.tail }
+	return r }
+
+
 
 // Sample tree
 // ===========
@@ -45,12 +58,12 @@ var tree = new AATree (AATree.defaultCompare, AATree._private._fromInternal, sto
 // tree.select(11).unset()._reify()
 // tree.select(12).unset()._reify()
 // tree.select(13).unset()._reify()
-
-var tree = tree.select(1).unset()
-store1 = tree._reify()
-store2 = tree.select(2).unset()._reify()
-store3 = tree.select(3).unset()._reify()
-store4 = tree.select(4).unset()._reify()
+var tree0 = tree
+var tree1 = tree.select(1).unset()
+store1 = tree1._reify()
+store2 = tree1.select(2).unset()._reify()
+store3 = tree1.select(3).unset()._reify()
+store4 = tree1.select(4).unset()._reify()
 
 
 function toNode (o) {
@@ -60,9 +73,7 @@ function toNode (o) {
 		return { shape:'record', label:o.k, rank:o.lv, children:['l', 'r'] }
 }
 
-//
-
-console.log(
+log(
 	viz(store0, toNode)
 , viz(store1, toNode)
 , viz(store2, toNode)
@@ -70,3 +81,26 @@ console.log(
 , viz(store4, toNode))
 
 // viz([store0, store1, store2, store3, store4], toNode))
+
+
+// 
+var cursor = tree.select(100)
+//var cursor = tree.select(3)
+ while (cursor) {
+   log(cursor.value)
+   cursor = cursor.previous()
+}
+
+log('==========')
+
+var cursor = tree.select(-1)
+log (cursor)
+log (cursor.previous(), cursor.next ())
+
+//var cursor = tree.select(3)
+while (cursor) {
+	log (cursor.value)
+	cursor = cursor.next()
+}
+
+
