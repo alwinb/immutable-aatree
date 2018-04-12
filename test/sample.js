@@ -1,6 +1,6 @@
 var AATree = require('../lib/aatree')
-	, Node = AATree._private.Node
-	, EMPTY = AATree._private.EMPTY
+	, Node = AATree.core.Node
+	, EMPTY = AATree.core.EMPTY
 	, viz = require('./dot').dot
 
 const log = console.log.bind (console)
@@ -41,7 +41,7 @@ var store0 = t4
 
 // ## An AATree based on the sample store
 
-var tree = new AATree (AATree.defaultCompare, AATree._private._fromInternal, store0)
+var tree = new AATree (AATree.defaultCompare, AATree.core._fromInternal, store0)
 
 // ## Test
 

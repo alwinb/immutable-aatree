@@ -16,7 +16,7 @@ var tree1 = new AATree (AATree.defaultCompare)
   // .set ('!!!')
 
 function toNode (o) {
-	if (o === AATree._private.EMPTY)
+	if (o === AATree.core.EMPTY)
 		return { shape:'point' }
 	if (typeof o === 'object' && 'lv' in o)
 		return { shape:'record', label:o.k, rank:o.lv, children:['l', 'r'] }
