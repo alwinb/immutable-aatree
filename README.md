@@ -1,9 +1,9 @@
 # Immutable/ Persistent AATree Datastructure
 
 An implementation of [persistent][1]
-ordered dictinaries via [AA trees][2], 
-and exposing a Cursor API for stepping through and manipulating
-entries of AATrees.
+ordered dictionaries via [AA trees][2], 
+with a Cursor API for stepping through and manipulating
+entries.
 
 [1]: (https://en.wikipedia.org/wiki/Persistent_data_structure)
 [2]: (https://en.wikipedia.org/wiki/AA_tree)
@@ -53,7 +53,7 @@ that uses javascripts built-in comparison operators.
 
 ## AATree construtor
 Given a comparison function `cmp` for keys,
-`AATree (cmp)` returns an empty AATree object, an object with methods
+`new AATree (cmp)` returns an empty AATree object, an object with methods
 `lookup`, `select`, `insert`, `stream` and `each`.
 Note that none of these methods mutate their owner object, but
 return new objects instead.
@@ -74,8 +74,8 @@ and methods `previous`, `next`, `set` and if found is true, `unset`.
 ### Insert
 `insert (k1, v1, ... kn, vn)` inserts an arbitrary number of
 key value pairs at once and returns a new AATree object.
-Note that for a single pair, `t.insert `(k1, v1)` is equivalent to
-`t.select(k1).set(v1)`.
+Note that for a single pair, `t.insert (k1, v1)` is equivalent to
+`t.select (k1) .set (v1)`.
 
 ### Each
 `each (fn)` calls a function `fn (v, k)` for each of the
@@ -93,19 +93,22 @@ The Cursor constructor is private.
 Cursor objects can be obtained via the public method `select`
 on an AATree object. However, cursors do have public members
 `found:boolean`, `key`, `value` and methods
-`previous`, `next`, `set` and if found is true, `unset`.
+`previous`, `next`, `set`, `unset`.
 
 ### Previous
 `previous ()` returns a new Cursor object by moving the cursor
-to the previous key-value pair in its associated AATree.
+to the previous key-value pair in its associated AATree, or
+`null` if no such pair exists. 
 
 ### Next
 `next ()` returns a new Cursor object by moving the cursor
-to the next key-value pair in its associated AATree.
+to the next key-value pair in its associated AATree, or
+`null` if no such pair exists. 
 
 ### Unset
 `unset()` returns a new AATree object by removing the key-value pair
-that the cursor is pointed at from its associated AATree.
+that the cursor is pointed at from its associated AATree. 
+If `cursor.found` is `false` the original associated AATree is returned. 
 
 ### Set
 `set (value)` returns a new AATree object by either inserting a new
