@@ -1,6 +1,6 @@
 var AATree = require('../lib/aatree')
-	, Node = AATree.core.Node
-	, EMPTY = AATree.core.EMPTY
+	, Node = AATree.__internal.Node
+	, EMPTY = AATree.__internal.EMPTY
 	, viz = require('./dot').dot
 
 const log = console.log.bind (console)
@@ -23,47 +23,47 @@ function toArray (path) {
 
 // Node (key, value, level, left, right)
 
-var t13 = Node(13, 'v13', 1, EMPTY, EMPTY)
-	, t11 = Node(11, 'v11', 1, EMPTY, EMPTY)
-	, t12 = Node(12, 'v12', 2, t11, t13)
-	, t9  = Node(9,  'v9',  1, EMPTY, EMPTY)
-	, t7  = Node(7,  'v7',  1, EMPTY, EMPTY)
-	, t8  = Node(8,  'v8',  2, t7, t9)
-	, t5  = Node(5,  'v5',  1, EMPTY, EMPTY)
-	, t6  = Node(6,  'v6',  2, t5, t8)
-	, t3  = Node(3,  'v3',  1, EMPTY, EMPTY)
-	, t1  = Node(1,  'v1',  1, EMPTY, EMPTY)
-	, t2  = Node(2,  'v2',  2, t1, t3)
-	, t10 = Node(10, 'v10', 3, t6, t12)
-	, t4  = Node(4,  'v4',  3, t2, t10)
+var t13 = Node (13, 'v13', 1, EMPTY, EMPTY)
+	, t11 = Node (11, 'v11', 1, EMPTY, EMPTY)
+	, t12 = Node (12, 'v12', 2, t11, t13)
+	, t9  = Node (9,  'v9',  1, EMPTY, EMPTY)
+	, t7  = Node (7,  'v7',  1, EMPTY, EMPTY)
+	, t8  = Node (8,  'v8',  2, t7, t9)
+	, t5  = Node (5,  'v5',  1, EMPTY, EMPTY)
+	, t6  = Node (6,  'v6',  2, t5, t8)
+	, t3  = Node (3,  'v3',  1, EMPTY, EMPTY)
+	, t1  = Node (1,  'v1',  1, EMPTY, EMPTY)
+	, t2  = Node (2,  'v2',  2, t1, t3)
+	, t10 = Node (10, 'v10', 3, t6, t12)
+	, t4  = Node (4,  'v4',  3, t2, t10)
 
 var store0 = t4
 
 // ## An AATree based on the sample store
 
-var tree = new AATree (AATree.defaultCompare, AATree.core._fromInternal, store0)
+var tree = new AATree (AATree.defaultCompare, AATree.__internal.from, store0)
 
 // ## Test
 
-// tree.select(1).unset()._reify()
-// tree.select(2).unset()._reify()
-// tree.select(3).unset()._reify()
-// tree.select(4).unset()._reify()
-// tree.select(5).unset()._reify()
-// tree.select(6).unset()._reify()
-// tree.select(7).unset()._reify()
-// tree.select(8).unset()._reify()
-// tree.select(9).unset()._reify()
-// tree.select(10).unset()._reify()
-// tree.select(11).unset()._reify()
-// tree.select(12).unset()._reify()
-// tree.select(13).unset()._reify()
+// tree.select(1).unset().__reify()
+// tree.select(2).unset().__reify()
+// tree.select(3).unset().__reify()
+// tree.select(4).unset().__reify()
+// tree.select(5).unset().__reify()
+// tree.select(6).unset().__reify()
+// tree.select(7).unset().__reify()
+// tree.select(8).unset().__reify()
+// tree.select(9).unset().__reify()
+// tree.select(10).unset().__reify()
+// tree.select(11).unset().__reify()
+// tree.select(12).unset().__reify()
+// tree.select(13).unset().__reify()
 var tree0 = tree
 var tree1 = tree.select(1).unset()
-store1 = tree1._reify()
-store2 = tree1.select(2).unset()._reify()
-store3 = tree1.select(3).unset()._reify()
-store4 = tree1.select(4).unset()._reify()
+store1 = tree1.__reify()
+store2 = tree1.select(2).unset().__reify()
+store3 = tree1.select(3).unset().__reify()
+store4 = tree1.select(4).unset().__reify()
 
 
 function toNode (o) {
@@ -97,10 +97,10 @@ var cursor = tree.select(-1)
 log (cursor)
 log (cursor.previous(), cursor.next ())
 
-//var cursor = tree.select(3)
+var cursor = tree.select(0)
+//var cursor = tree.selectFirst()
 while (cursor) {
 	log (cursor.value)
 	cursor = cursor.next()
 }
-
 

@@ -16,7 +16,9 @@
     "aatree",
     "AAtree",
     "datastructure",
-    "ordered dictionary"
+    "ordered dictionary",
+    "cursor",
+    "zipper"
   ],
   "author": "Alwin Blok",
   "license": "MIT",

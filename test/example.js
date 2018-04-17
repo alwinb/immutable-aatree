@@ -26,7 +26,12 @@ tree2.each (log)
 // Unset on a cursor not found, does nothing
 var c = tree2.select (10)
 log (c.found) // false
+
 var tree3 = c.unset ()
 log (tree2 === tree3) // true
 
-var c = tree2.select (0)
+tree4 = tree3.remove (1)
+tree4.each (log)
+
+//var c = tree2.select (0)
+
