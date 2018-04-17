@@ -1,14 +1,18 @@
 var AATree = require ('../lib/aatree')
-  , log = console.log.bind (console)
+const log = console.log.bind (console)
 
 var empty = new AATree (AATree.defaultCompare)
 var tree1 = empty.insert (1, 'Hello', 2, 'World', 3, '!!')
 
-tree1.each (log)
+function logp (value, key) {
+  log (key+':', value)
+}
 
-// Hello 1
-// World 2
-// !! 3
+tree1.forEach (logp)
+
+// 1: Hello
+// 2: World
+// 3: !!
 
 var cursor = tree1.select (3)
 log (cursor.found)
@@ -16,22 +20,28 @@ log (cursor.found)
 // true
 
 var tree2 = cursor.set ('!')
-tree2.each (log)
+tree2.forEach (logp)
 
-// Hello 1
-// World 2
-// ! 3
+// 1: Hello
+// 2: World
+// 3: !
 
+var cursor = tree2.select (5)
+log (cursor.found)
 
-// Unset on a cursor not found, does nothing
-var c = tree2.select (10)
-log (c.found) // false
+// false
 
-var tree3 = c.unset ()
-log (tree2 === tree3) // true
+tree4 = cursor.set ('Welcome!')
+tree4.forEach (logp)
 
-tree4 = tree3.remove (1)
-tree4.each (log)
+// 1: Hello
+// 2: World
+// 3: !
+// 5: Welcome!
 
-//var c = tree2.select (0)
+tree5 = tree4.remove (2)
+tree5.forEach (logp)
 
+// 1: Hello
+// 3: !
+// 5: Welcome!
