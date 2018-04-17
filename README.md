@@ -61,7 +61,7 @@ return new objects instead.
 ### Lookup
 `lookup (k)` searches for a key `k` and returns an object
 `{ found:true, key:k, value }` if found,
-or `{ found:false }` otherwise.
+or `{ found:false }` otherwise. `search` is an alias for `lookup`. 
 
 ### Select
 `select (k)` searches for a key `k` and returns a `Cursor` object.
@@ -69,13 +69,19 @@ Cursor objects have methods to step through key-value pairs and to create
 new AATree objects by setting, and/ or remove key-value pairs from their
 their associated AATree.
 Cursor objects have members `found:boolean`, `key`, `value`
-and methods `previous`, `next`, `set` and if found is true, `unset`.
+and methods `previous`, `next`, `set` and `unset`.
 
 ### Insert
 `insert (k1, v1, ... kn, vn)` inserts an arbitrary number of
 key value pairs at once and returns a new AATree object.
 Note that for a single pair, `t.insert (k1, v1)` is equivalent to
 `t.select (k1) .set (v1)`.
+
+### Remove
+`remove (k1, ... kn)` returns a new AATree object by removing the 
+key-value pairs with the specified keys. Note that `t.remove (k1)` is 
+equivalent to `t.select (k1) .unset ()`. The method `delete`
+is an alias for `remove`.
 
 ### Each
 `each (fn)` calls a function `fn (v, k)` for each of the
@@ -93,7 +99,7 @@ The Cursor constructor is private.
 Cursor objects can be obtained via the public method `select`
 on an AATree object. However, cursors do have public members
 `found:boolean`, `key`, `value` and methods
-`previous`, `next`, `set`, `unset`.
+`previous`, `next`, `set` and `unset`.
 
 ### Previous
 `previous ()` returns a new Cursor object by moving the cursor
@@ -111,6 +117,5 @@ that the cursor is pointed at from its associated AATree.
 If `cursor.found` is `false` the original associated AATree is returned. 
 
 ### Set
-`set (value)` returns a new AATree object by either inserting a new
-key-value pair, or updating the value of the the existing key-value pair
-that the cursor is pointing at in its associated AATree.
+`set (value)` returns a new AATree object by inserting or updating the
+the key-value pair that the cursor is pointing at in its associated AATree.
