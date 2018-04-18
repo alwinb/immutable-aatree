@@ -17,7 +17,7 @@ entries.
 	var tree1 = empty.insert (1, 'Hello', 2, 'World', 3, '!!')
 
 	function logp (value, key) {
-		log (key+':', value)
+	  log (key+':', value)
 	}
 
 	tree1.forEach (logp)
@@ -52,11 +52,11 @@ entries.
 	// 5: Welcome!
 
 	tree5 = tree4.remove (2)
-	tree5.forEach (logp)
+	for (let p of tree5) log (p)
 
-	// 1: Hello
-	// 3: !
-	// 5: Welcome!
+	// [ 1, 'Hello' ]
+	// [ 3, '!' ]
+	// [ 5, 'Welcome!' ]
 
 
 # API
@@ -101,7 +101,7 @@ key value pairs at once and returns a new AATree object.
 Note that for a single pair, `t.insert (k1, v1)` is equivalent to
 `t.select (k1) .set (v1)`.
 
-### Remove
+### Remove, Delete
 `remove (k1, ... kn)` returns a new AATree object by removing the 
 key-value pairs with the specified keys. Note that `t.remove (k1)` is 
 equivalent to `t.select (k1) .unset ()`. The method `delete`
@@ -110,6 +110,12 @@ is an alias for `remove`.
 ### Each
 `each (fn)` calls a function `fn (v, k)` for each of the
 key-value pairs `(k, v)` in the AATree in ascending key order.
+
+### Entries, [Symbol.iterator]
+`entries ()` returns a javascript ES6 style iterator object. 
+In an ES6 environment, the method is also exposed as `[Symbol.iterator]`.
+The key value pairs are iterated as pairs, e.g. arrays `[key, value]`
+in ascending order by key. 
 
 ### Stream
 `stream ()` returns a stateful lazy stream object, an object with

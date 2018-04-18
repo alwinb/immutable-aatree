@@ -40,8 +40,10 @@ tree4.forEach (logp)
 // 5: Welcome!
 
 tree5 = tree4.remove (2)
-tree5.forEach (logp)
+for (let p of tree5) log (p)
 
-// 1: Hello
-// 3: !
-// 5: Welcome!
+// [ 1, 'Hello' ]
+// [ 3, '!' ]
+// [ 5, 'Welcome!' ]
+
+
