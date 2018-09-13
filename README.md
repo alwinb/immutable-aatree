@@ -1,63 +1,72 @@
-# Immutable/ Persistent AATree Datastructure
+# Persistent AATree Datastructure
 
-An implementation of [persistent][1]
-ordered dictionaries via [AA trees][2], 
-with a Cursor API for stepping through and manipulating
-entries.
+ ![Size][size-image] ![Size gzip][size-gzip-image] [![Dependencies][deps-image]][deps-url] [![NPM version][npm-image]][npm-url]
 
-[1]: (https://en.wikipedia.org/wiki/Persistent_data_structure)
-[2]: (https://en.wikipedia.org/wiki/AA_tree)
+An implementation of [persistent][1] ordered dictionaries via [AA trees][2], 
+with a Cursor API for stepping through and manipulating entries.
+
+[1]: https://en.wikipedia.org/wiki/Persistent_data_structure
+[2]: https://en.wikipedia.org/wiki/AA_tree
+
+[npm-image]: https://img.shields.io/npm/v/immutable-aatree.svg
+[npm-url]: https://npmjs.org/package/immutable-aatree
+[deps-image]: https://img.shields.io/david/alwinb/immutable-aatree.svg
+[deps-url]: https://david-dm.org/alwinb/immutable-aatree
+[size-image]: http://img.badgesize.io/alwinb/immutable-aatree/master/lib/aatree.js
+[size-gzip-image]: http://img.badgesize.io/alwinb/immutable-aatree/master/lib/aatree.js?compression=gzip
+
 
 # Example
 
-	var AATree = require ('immutable-aatree')
-	const log = console.log.bind (console)
+```javascript
+var AATree = require ('immutable-aatree')
+const log = console.log.bind (console)
 
-	var empty = new AATree (AATree.defaultCompare)
-	var tree1 = empty.insert (1, 'Hello', 2, 'World', 3, '!!')
+var empty = new AATree (AATree.defaultCompare)
+var tree1 = empty.insert (1, 'Hello', 2, 'World', 3, '!!')
 
-	function logp (value, key) {
-	  log (key+':', value)
-	}
+function logp (value, key) {
+  log (key+':', value)
+}
 
-	tree1.forEach (logp)
+tree1.forEach (logp)
 
-	// 1: Hello
-	// 2: World
-	// 3: !!
+// 1: Hello
+// 2: World
+// 3: !!
 
-	var cursor = tree1.select (3)
-	log (cursor.found)
+var cursor = tree1.select (3)
+log (cursor.found)
 
-	// true
+// true
 
-	var tree2 = cursor.set ('!')
-	tree2.forEach (logp)
+var tree2 = cursor.set ('!')
+tree2.forEach (logp)
 
-	// 1: Hello
-	// 2: World
-	// 3: !
+// 1: Hello
+// 2: World
+// 3: !
 
-	var cursor = tree2.select (5)
-	log (cursor.found)
+var cursor = tree2.select (5)
+log (cursor.found)
 
-	// false
+// false
 
-	tree4 = cursor.set ('Welcome!')
-	tree4.forEach (logp)
+tree4 = cursor.set ('Welcome!')
+tree4.forEach (logp)
 
-	// 1: Hello
-	// 2: World
-	// 3: !
-	// 5: Welcome!
+// 1: Hello
+// 2: World
+// 3: !
+// 5: Welcome!
 
-	tree5 = tree4.remove (2)
-	for (let p of tree5) log (p)
+tree5 = tree4.remove (2)
+for (let p of tree5) log (p)
 
-	// [ 1, 'Hello' ]
-	// [ 3, '!' ]
-	// [ 5, 'Welcome!' ]
-
+// [ 1, 'Hello' ]
+// [ 3, '!' ]
+// [ 5, 'Welcome!' ]
+```
 
 # API
 
@@ -72,13 +81,15 @@ This order is specified by a comparison function, a function
 The static method `AATree.defaultCompare` is a comparison function
 that uses javascripts built-in comparison operators.
 
-	AATree.defaultCompare = function compare (a, b) {
-	  return a < b ? -1 : a > b ? 1 : 0 }
+```javascript
+AATree.defaultCompare = function compare (a, b) {
+	return a < b ? -1 : a > b ? 1 : 0 }
+```
 
 ## AATree construtor
 Given a comparison function `cmp` for keys,
 `new AATree (cmp)` returns an empty AATree object, an object with methods
-`lookup`, `select`, `insert`, `stream` and `each`.
+`lookup`, `select`, `insert`, `entries`, `[Symbol.iterator]`, `stream` and `each`.
 Note that none of these methods mutate their owner object, but
 return new objects instead.
 
