@@ -81,7 +81,7 @@ AATree.defaultCompare = function compare (a, b) {
 ## AATree construtor
 Given a comparison function `cmp` for keys,
 `new AATree (cmp)` returns an empty AATree object, an object with methods
-`lookup`, `select`, `insert`, `entries`, `[Symbol.iterator]`, `stream` and `forEach`.
+`lookup`, `select`, `insert`, `entries`, `keys`, `values`, `[Symbol.iterator]`, `stream` and `forEach`.
 Note that none of these methods mutate their owner object, but
 return new objects instead.
 
