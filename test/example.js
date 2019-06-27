@@ -31,7 +31,7 @@ log (cursor.found)
 
 // false
 
-tree4 = cursor.set ('Welcome!')
+var tree4 = cursor.set ('Welcome!')
 tree4.forEach (logp)
 
 // 1: Hello
@@ -39,7 +39,7 @@ tree4.forEach (logp)
 // 3: !
 // 5: Welcome!
 
-tree5 = tree4.remove (2)
+var tree5 = tree4.remove (2)
 for (let p of tree5) log (p)
 
 // [ 1, 'Hello' ]

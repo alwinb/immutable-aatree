@@ -1,63 +1,64 @@
 # Immutable/ Persistent AATree Datastructure
 
-An implementation of [persistent][1]
-ordered dictionaries via [AA trees][2], 
-with a Cursor API for stepping through and manipulating
-entries.
+ ![Size][size-image] ![Size gzip][size-gzip-image] [![Dependencies][deps-image]][deps-url] [![NPM version][npm-image]][npm-url]
 
-[1]: (https://en.wikipedia.org/wiki/Persistent_data_structure)
-[2]: (https://en.wikipedia.org/wiki/AA_tree)
+An implementation of [persistent][1] ordered dictionaries via [AA-trees][2], 
+with a Cursor API for stepping through and manipulating entries.
+
+[1]: https://en.wikipedia.org/wiki/Persistent_data_structure
+[2]: https://en.wikipedia.org/wiki/AA_tree
 
 # Example
 
-	var AATree = require ('immutable-aatree')
-	const log = console.log.bind (console)
+```javascript
+const AATree = require ('immutable-aatree')
+const log = console.log.bind (console)
 
-	var empty = new AATree (AATree.defaultCompare)
-	var tree1 = empty.insert (1, 'Hello', 2, 'World', 3, '!!')
+const empty = new AATree (AATree.defaultCompare)
+var tree1 = empty.insert (1, 'Hello', 2, 'World', 3, '!!')
 
-	function logp (value, key) {
-	  log (key+':', value)
-	}
+function logp (value, key) {
+  log (key+':', value)
+}
 
-	tree1.forEach (logp)
+tree1.forEach (logp)
 
-	// 1: Hello
-	// 2: World
-	// 3: !!
+// 1: Hello
+// 2: World
+// 3: !!
 
-	var cursor = tree1.select (3)
-	log (cursor.found)
+var cursor = tree1.select (3)
+log (cursor.found)
 
-	// true
+// true
 
-	var tree2 = cursor.set ('!')
-	tree2.forEach (logp)
+var tree2 = cursor.set ('!')
+tree2.forEach (logp)
 
-	// 1: Hello
-	// 2: World
-	// 3: !
+// 1: Hello
+// 2: World
+// 3: !
 
-	var cursor = tree2.select (5)
-	log (cursor.found)
+var cursor = tree2.select (5)
+log (cursor.found)
 
-	// false
+// false
 
-	tree4 = cursor.set ('Welcome!')
-	tree4.forEach (logp)
+var tree4 = cursor.set ('Welcome!')
+tree4.forEach (logp)
 
-	// 1: Hello
-	// 2: World
-	// 3: !
-	// 5: Welcome!
+// 1: Hello
+// 2: World
+// 3: !
+// 5: Welcome!
 
-	tree5 = tree4.remove (2)
-	for (let p of tree5) log (p)
+var tree5 = tree4.remove (2)
+for (let p of tree5) log (p)
 
-	// [ 1, 'Hello' ]
-	// [ 3, '!' ]
-	// [ 5, 'Welcome!' ]
-
+// [ 1, 'Hello' ]
+// [ 3, '!' ]
+// [ 5, 'Welcome!' ]
+```
 
 # API
 
@@ -72,17 +73,19 @@ This order is specified by a comparison function, a function
 The static method `AATree.defaultCompare` is a comparison function
 that uses javascripts built-in comparison operators.
 
-	AATree.defaultCompare = function compare (a, b) {
-	  return a < b ? -1 : a > b ? 1 : 0 }
+```javascript
+AATree.defaultCompare = function compare (a, b) {
+	return a < b ? -1 : a > b ? 1 : 0 }
+```
 
 ## AATree construtor
 Given a comparison function `cmp` for keys,
 `new AATree (cmp)` returns an empty AATree object, an object with methods
-`lookup`, `select`, `insert`, `stream` and `each`.
+`lookup`, `select`, `insert`, `entries`, `[Symbol.iterator]`, `stream` and `forEach`.
 Note that none of these methods mutate their owner object, but
 return new objects instead.
 
-### Lookup
+### Lookup, Search
 `lookup (k)` searches for a key `k` and returns an object
 `{ found:true, key:k, value }` if found,
 or `{ found:false }` otherwise. `search` is an alias for `lookup`. 
@@ -107,22 +110,23 @@ key-value pairs with the specified keys. Note that `t.remove (k1)` is
 equivalent to `t.select (k1) .unset ()`. The method `delete`
 is an alias for `remove`.
 
-### Each
-`each (fn)` calls a function `fn (v, k)` for each of the
+### ForEach
+`forEach (fn)` calls a function `fn (v, k)` for each of the
 key-value pairs `(k, v)` in the AATree in ascending key order.
 
 ### Entries, [Symbol.iterator]
 `entries ()` returns a javascript ES6 style iterator object. 
 In an ES6 environment, the method is also exposed as `[Symbol.iterator]`.
-The key value pairs are iterated as pairs, e.g. arrays `[key, value]`
+The key value pairs are iterated as tuples, e.g. arrays `[key, value]`
 in ascending order by key. 
 
-### Stream
-`stream ()` returns a stateful lazy stream object, an object with
-a single method `next`. Each call of `next()` returns
-the next key-value pair in the AATree as an object `{ key, value }`
-in ascending order by key, or `null` if
-the end of the stream has been reached.
+### Keys
+`keys ()` returns a javascript ES6 style iterator object for the
+keys in the AATree in ascending order. 
+
+### Values
+`keys ()` returns a javascript ES6 style iterator object for the
+keys in the AATree in ascending order of the key under which they are stored. 
 
 ## Cursor constructor
 The Cursor constructor is private.
@@ -131,10 +135,10 @@ on an AATree object. However, cursors do have public members
 `found:boolean`, `key`, `value` and methods
 `previous`, `next`, `set` and `unset`.
 
-### Previous
+### Previous, Prev
 `previous ()` returns a new Cursor object by moving the cursor
 to the previous key-value pair in its associated AATree, or
-`null` if no such pair exists. 
+`null` if no such pair exists. `prev` is an alias for `previous`. 
 
 ### Next
 `next ()` returns a new Cursor object by moving the cursor
@@ -149,3 +153,25 @@ If `cursor.found` is `false` the original associated AATree is returned.
 ### Set
 `set (value)` returns a new AATree object by inserting or updating the
 the key-value pair that the cursor is pointing at in its associated AATree.
+
+
+# Changelog
+
+- Changes since 0.9.0:
+  - Added `AATree` methods `keys` and `values`
+  - Made the iterator objects returned from `entries`, `keys` and `values` iterable themselves. 
+  - Added an alias `prev` for the `previous` method on `Cursor`. 
+
+
+# License
+
+MIT License.  
+Enjoy!
+
+
+[npm-image]: https://img.shields.io/npm/v/immutable-aatree.svg
+[npm-url]: https://npmjs.org/package/immutable-aatree
+[deps-image]: https://img.shields.io/david/alwinb/immutable-aatree.svg
+[deps-url]: https://david-dm.org/alwinb/immutable-aatree
+[size-image]: http://img.badgesize.io/alwinb/immutable-aatree/master/lib/aatree.js
+[size-gzip-image]: http://img.badgesize.io/alwinb/immutable-aatree/master/lib/aatree.js?compression=gzip
