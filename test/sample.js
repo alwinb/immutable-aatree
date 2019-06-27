@@ -67,10 +67,13 @@ store4 = tree1.select(4).unset().__reify()
 
 
 function toNode (o) {
-	if (o === EMPTY)
-		return { shape:'point' }
-	if (typeof o === 'object' && 'lv' in o)
-		return { shape:'record', label:o.k, rank:o.lv, children:['l', 'r'] }
+  if (o === EMPTY)
+    return { shape:'point' }
+  if (o && typeof o === 'object' && 'lv' in o)
+    return { shape:'record', label:o.k, rank:o.lv, children:['l', 'r'] }
+  if (o && typeof o === 'object' && 'parent' in o)
+    return { shape:'record', label:o.node.k, children:['branch', 'node', 'parent'], color:'forestgreen' }
+  else return viz.defaultNode (o)
 }
 
 log(
@@ -78,29 +81,31 @@ log(
 , viz(store1, toNode)
 , viz(store2, toNode)
 , viz(store3, toNode)
-, viz(store4, toNode))
+, viz(store4, toNode)
+, viz(tree0.select(4).__reify(), toNode)
+, viz(tree0.select(7).__reify(), toNode)
+)
 
 // viz([store0, store1, store2, store3, store4], toNode))
 
 
 // 
-var cursor = tree.select(100)
-//var cursor = tree.select(3)
- while (cursor) {
-   log(cursor.value)
-   cursor = cursor.previous()
-}
+// var cursor = tree.select(100)
+// //var cursor = tree.select(3)
+//  while (cursor) {
+//    log(cursor.value)
+//    cursor = cursor.previous()
+// }
 
-log('==========')
+// log('==========')
+//
+// var cursor = tree.select(-1)
+// log (cursor)
+// log (cursor.previous(), cursor.next ())
 
-var cursor = tree.select(-1)
-log (cursor)
-log (cursor.previous(), cursor.next ())
-
-var cursor = tree.select(0)
-//var cursor = tree.selectFirst()
-while (cursor) {
-	log (cursor.value)
-	cursor = cursor.next()
-}
-
+// var cursor = tree.select(0)
+// //var cursor = tree.selectFirst()
+// while (cursor) {
+//   log (cursor.value)
+//   cursor = cursor.next()
+// }

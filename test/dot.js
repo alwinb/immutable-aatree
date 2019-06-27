@@ -1,8 +1,11 @@
-(function () {
+"use strict"
+module.exports = { viz:dot, dot:dot }
 
 // This is not pretty - in fact, it is horrible
 //  and it's only still here because it's so useful for debugging
 //  and I have just not found time to write something half decent to replace it
+
+dot.defaultNode = defaultNode 
 
 function dot (object, customNode) {
 	var customNode = customNode != null ? customNode : function (x) {}
@@ -43,7 +46,7 @@ function traverse (from_id, key, to_object) {
 	//  the custom / built-in functions
 
 	var node = customNode(to_object)
-	if (node == null) node = standardNode(to_object)
+	if (node == null) node = defaultNode (to_object)
 	
 	if (node.children != null) {
 		function fn (key, i) { return '<f'+i+'>'+escape(key) }
@@ -66,25 +69,32 @@ function traverse (from_id, key, to_object) {
 
 }
 
-function standardNode (obj) {
+function defaultNode (obj) {
 	var t = typeof obj
 	if (obj === null)
 		return { label:'null', shape:'point' }
+
 	if (obj === undefined)
 		return { label:'null', style:'invisible' }
+
 	if (obj === false || obj === true || obj instanceof Boolean)
 		return { label: String (obj) }
+
 	if (t === 'number' || obj instanceof Number)
 		return { label: String (obj) }
+
 	if (t === 'string' || obj instanceof String)
 		return { label: String (obj) }
+
 	if (typeof obj === 'function')
 		return { label: obj.name != null ? '[function '+obj.name+']' : '[function]' }
-	if (obj instanceof Array) {
+
+	if (Array.isArray (obj)) {
 		for (var children = [], i=0, l=obj.length; i<l; i++)
 			children.push(i)
 		return { shape:'record', label:'Array', children:children }
 	}
+
 	else {
 		var children = []
 		for (var a in obj) if (a[0] !== '_' && typeof obj[a] !== 'function')
@@ -102,9 +112,9 @@ function extend (obj) {
 
 //----
 
-function Node (id, atts) {
+function Node (id, atts = {}) {
 	this.id = id;
-	this.attributes = atts || {} }
+	this.attributes = atts }
 
 Node.prototype.toString = function () {
 	var t = '\t' + this.id + ' ['
@@ -126,9 +136,9 @@ Edge.prototype.toString = function () {
 
 
 
-function Graph (v,e) {
-	this.nodes = v || {}
-	this.edges = e || []
+function Graph (v = {}, e = []) {
+	this.nodes = v
+	this.edges = e
 	this.ranks = {} }
 
 Graph.prototype = {
@@ -154,8 +164,4 @@ Graph.prototype = {
 }
 
 function _escape (str) {
-	return '"'+String(str).replace(/"/g, '\\"')+'"' }
-
-
-exports.dot = dot
-})()
+	return '"'+String (str).replace(/"/g, '\\"')+'"' }
