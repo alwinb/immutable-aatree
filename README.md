@@ -85,7 +85,7 @@ Given a comparison function `cmp` for keys,
 Note that none of these methods mutate their owner object, but
 return new objects instead.
 
-### Lookup
+### Lookup, Search
 `lookup (k)` searches for a key `k` and returns an object
 `{ found:true, key:k, value }` if found,
 or `{ found:false }` otherwise. `search` is an alias for `lookup`. 
@@ -117,15 +117,16 @@ key-value pairs `(k, v)` in the AATree in ascending key order.
 ### Entries, [Symbol.iterator]
 `entries ()` returns a javascript ES6 style iterator object. 
 In an ES6 environment, the method is also exposed as `[Symbol.iterator]`.
-The key value pairs are iterated as pairs, e.g. arrays `[key, value]`
+The key value pairs are iterated as tuples, e.g. arrays `[key, value]`
 in ascending order by key. 
 
-### Stream
-`stream ()` returns a stateful lazy stream object, an object with
-a single method `next`. Each call of `next()` returns
-the next key-value pair in the AATree as an object `{ key, value }`
-in ascending order by key, or `null` if
-the end of the stream has been reached.
+### Keys
+`keys ()` returns a javascript ES6 style iterator object for the
+keys in the AATree in ascending order. 
+
+### Values
+`keys ()` returns a javascript ES6 style iterator object for the
+keys in the AATree in ascending order of the key under which they are stored. 
 
 ## Cursor constructor
 The Cursor constructor is private.
@@ -134,10 +135,10 @@ on an AATree object. However, cursors do have public members
 `found:boolean`, `key`, `value` and methods
 `previous`, `next`, `set` and `unset`.
 
-### Previous
+### Previous, Prev
 `previous ()` returns a new Cursor object by moving the cursor
 to the previous key-value pair in its associated AATree, or
-`null` if no such pair exists. 
+`null` if no such pair exists. `prev` is an alias for `previous`. 
 
 ### Next
 `next ()` returns a new Cursor object by moving the cursor
@@ -152,6 +153,15 @@ If `cursor.found` is `false` the original associated AATree is returned.
 ### Set
 `set (value)` returns a new AATree object by inserting or updating the
 the key-value pair that the cursor is pointing at in its associated AATree.
+
+
+# Changelog
+
+- Changes since 0.9.0:
+  - Added `AATree` methods `keys` and `values`
+  - Made the iterator objects returned from `entries`, `keys` and `values` iterable themselves. 
+  - Added an alias `prev` for the `previous` method on `Cursor`. 
+
 
 # License
 
