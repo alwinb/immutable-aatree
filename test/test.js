@@ -97,6 +97,7 @@ function isSorted (iterable, cmp = AATree.defaultCompare) {
 
 assert.strictEqual (isSorted (t), true)
 assert.strictEqual (isSorted (r), true)
+assert.strictEqual (t.size, countSize (t))
 assert.strictEqual (countSize (t), r.items.length)
 
 log ('All tests passed')
