@@ -1,32 +1,18 @@
 const AATree = require('../lib/aatree')
-	, Node = AATree.__internal.Node
-	, EMPTY = AATree.__internal.EMPTY
-	, viz = require('./dot').dot
+	, Node = AATree._internal.Node
+	, EMPTY = AATree._internal.EMPTY
+	, viz = require('./layout').toSvg
   , log = console.log.bind (console)
 
-function toNode (o) {
-  if (o === EMPTY)
-    return { shape:'point' }
-  if (typeof o === 'object' && 'lv' in o)
-    return { shape:'record', label:o.k, rank:o.lv, children:_children(o) }
-}
-
-function _children (o) {
-  const r = []
-  if (o.l !== EMPTY) r.push ('l')
-  if (o.r !== EMPTY) r.push ('r')
-  return r
-}
-
 let t = new AATree ()
-for (let i=0; i<200; i++) {
+for (let i=0; i<1200; i++) {
   let k = Math.round (Math.random ()*1000)
   t = t.insert (k, 'value for '+k)
 }
 
-for (let i=0; i<100; i++) {
+for (let i=0; i<50; i++) {
   let k = Math.round (Math.random ()*1000)
-  let c = t.select (k) .next ()
+  let c = t.select (k)// .next ()
   if (c) t = c .unset ()
 }
 
@@ -49,7 +35,6 @@ function isSorted (tree, cmp = AATree.defaultCompare) {
 log (countSize (t))
 log (isSorted (t))
 
-log(
-  viz (t.__reify (), toNode)
-)
+viz (t, process.stdout)
 
+process.exit (205)

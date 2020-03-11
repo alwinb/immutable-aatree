@@ -8,39 +8,31 @@ module.exports = { viz:dot, dot:dot }
 dot.defaultNode = defaultNode 
 
 function dot (object, customNode) {
+  const nodes = new Map ()
 	var customNode = customNode != null ? customNode : function (x) {}
 	var graph = new Graph ()
-		, marked = []
 		, idCount = 0
 	graph.addNode('n_root', {'style':'invisible'})
 	traverse('n_root', '', object)
-	removeMarks()
 	return graph.toString()
 
 // where
 
-function removeMarks () {
-	for (var i=0,l=marked.length; i<l; i++)
-		delete marked[i].__viz_id }
 
 function traverse (from_id, key, to_object) {
 
 	// if to_object is marked,
 	// then just add an edge
 
-	try { if ('__viz_id' in to_object) {
-		graph.edges.push(new Edge(from_id, to_object.__viz_id))//, field))
+	let to_id = nodes.get (to_object)
+  if (to_id) {
+		graph.edges.push (new Edge(from_id, to_id))//, field))
 		return
-	} } catch (e) {}
+	}
 
-	// otherwise create an id
-	// and attempt to mark the object
-
-	var to_id = 'n_'+(idCount++)
-	try {
-		to_object.__viz_id = to_id
-		marked.push(to_object)
-	} catch (e) {}
+	// otherwise create an id, mark the object
+	to_id = 'n_'+(idCount++)
+  nodes.set (to_object, to_id)
 
 	// create a node using
 	//  the custom / built-in functions
