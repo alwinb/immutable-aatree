@@ -179,6 +179,7 @@ the key-value pair that the cursor is pointing at in its associated AATree.
 - Version 1.0.0-alpha:
   - Switched to ES6. 
   - Changed the default compare function to compare on the type first, the value next. 
+  - Added a `size` property. 
   - Added methods `has` and `get` to align with the ES6 `Map` API.
   - Removed the `delete` alias to avoid confusion with the ES6 API, where it is a mutating method. 
 
