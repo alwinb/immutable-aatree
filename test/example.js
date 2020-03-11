@@ -46,4 +46,14 @@ for (let p of tree5) log (p)
 // [ 3, '!' ]
 // [ 5, 'Welcome!' ]
 
+for (let p of tree5.keys()) log (p)
 
+// 1
+// 3
+// 5
+
+for (let p of tree5.values()) log (p)
+
+// 'Hello'
+// '!'
+// 'Welcome!'

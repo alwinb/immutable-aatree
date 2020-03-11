@@ -1,7 +1,7 @@
 var AATree = require('../lib/aatree')
-	, Node = AATree.__internal.Node
-	, EMPTY = AATree.__internal.EMPTY
-	, viz = require('./dot').dot
+	, Node = AATree._internal.Node
+	, EMPTY = AATree._internal.EMPTY
+	, viz = require('./layout').toSvg
 
 const log = console.log.bind (console)
 
@@ -41,30 +41,28 @@ var store0 = t4
 
 // ## An AATree based on the sample store
 
-var tree = new AATree (AATree.defaultCompare, AATree.__internal.from, store0)
+var tree = new AATree (AATree.defaultCompare, store0)
 
 // ## Test
 
-// tree.select(1).unset().__reify()
-// tree.select(2).unset().__reify()
-// tree.select(3).unset().__reify()
-// tree.select(4).unset().__reify()
-// tree.select(5).unset().__reify()
-// tree.select(6).unset().__reify()
-// tree.select(7).unset().__reify()
-// tree.select(8).unset().__reify()
-// tree.select(9).unset().__reify()
-// tree.select(10).unset().__reify()
-// tree.select(11).unset().__reify()
-// tree.select(12).unset().__reify()
-// tree.select(13).unset().__reify()
+// tree.select(1).unset().store
+// tree.select(2).unset().store
+// tree.select(3).unset().store
+// tree.select(4).unset().store
+// tree.select(5).unset().store
+// tree.select(6).unset().store
+// tree.select(7).unset().store
+// tree.select(8).unset().store
+// tree.select(9).unset().store
+// tree.select(10).unset().store
+// tree.select(11).unset().store
+// tree.select(12).unset().store
+// tree.select(13).unset().store
 var tree0 = tree
 var tree1 = tree.select(1).unset()
-store1 = tree1.__reify()
-store2 = tree1.select(2).unset().__reify()
-store3 = tree1.select(3).unset().__reify()
-store4 = tree1.select(4).unset().__reify()
-
+var tree2 = tree1.select(2).unset()
+var tree3 = tree1.select(3).unset()
+var tree4 = tree1.select(4).unset()
 
 function toNode (o) {
   if (o === EMPTY)
@@ -77,19 +75,18 @@ function toNode (o) {
 }
 
 log(
-	viz(store0, toNode)
-, viz(store1, toNode)
-, viz(store2, toNode)
-, viz(store3, toNode)
-, viz(store4, toNode)
-, viz(tree0.select(4).__reify(), toNode)
-, viz(tree0.select(7).__reify(), toNode)
+  '<style>svg { border:1px solid black;}</style>'
+,
+	viz(tree0, toNode)
+, viz(tree1, toNode)
+, viz(tree2, toNode)
+, viz(tree3, toNode)
+, viz(tree4, toNode)
+// , viz(tree0.select(4), toNode)
+// , viz(tree0.select(7), toNode)
 )
+process.exit (205)
 
-// viz([store0, store1, store2, store3, store4], toNode))
-
-
-// 
 // var cursor = tree.select(100)
 // //var cursor = tree.select(3)
 //  while (cursor) {
