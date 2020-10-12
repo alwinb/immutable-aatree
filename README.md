@@ -176,6 +176,10 @@ the key-value pair that the cursor is pointing at in its associated AATree.
 
 # Changelog
 
+- Version 1.0.0:
+  - Some touch-ups. 
+  - Added a nicer visualisation for the test/ examples. 
+
 - Version 1.0.0-alpha:
   - Switched to ES6. 
   - Changed the default compare function to compare on the type first, the value next. 
