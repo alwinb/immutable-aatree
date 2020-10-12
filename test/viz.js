@@ -1,5 +1,5 @@
 const AATree = require('../lib/aatree')
-const viz = require('./layout').toSvg
+const viz = require('./layout').viz
 const log = console.log.bind (console)
 
 let t = new AATree ()
@@ -18,7 +18,8 @@ for (let i=0; i<REMOVES; i++) {
   if (c) t = c .unset ()
 }
 
+log ('<pre>')
 viz (t, process.stdout)
-
 // 205 tells TextMate to show the result as HTML
-process.exit (205)
+process.stdout.on ('close', _ => process.exit (205))
+process.stdout.end ()

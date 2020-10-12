@@ -1,6 +1,6 @@
 {
   "name": "immutable-aatree",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0",
   "description": "Persistent AAtree datastructure",
   "main": "lib/aatree.js",
   "scripts": {
