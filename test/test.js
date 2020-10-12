@@ -43,43 +43,6 @@ class ReferenceDict {
 // let pair = ref.insert ([4, '5'])
 // assert.equal (ref.get (4), [])
 
-
-
-let t = new AATree ()
-let r = new ReferenceDict ()
-
-const INSERTS = 1000
-for (let i=0; i<INSERTS; i++) {
-  let k = Math.round (Math.random () * 2000)
-  let v = 'value for ' + k
-  t = t.insert (k, v)
-  r.insert (k, v)
-
-  assert.strictEqual (t.has (k), true)
-  assert.deepStrictEqual (r.get (k), v)
-  assert.deepStrictEqual (t.get (k), v)
-  assert.strictEqual (countSize (t), r.items.length)
-}
-
-assert.deepStrictEqual ([...t], [...r])
-
-const REMOVES = 500
-for (let i=0; i<REMOVES; i++) {
-  let k = Math.round (Math.random () * 2000)
-  let c = t.select (k)// .next ()
-  if (c) t = c .unset ()
-  r.remove (k)
-
-  assert.equal (t.has (k), false)
-  assert.deepStrictEqual (r.get (k), undefined)
-  assert.deepStrictEqual (t.get (k), undefined)
-  assert.deepStrictEqual (t.lookup (k), { found:false })
-}
-
-assert.deepStrictEqual ([...t], [...r])
-
-
-
 function countSize (tree) {
   let c = 0
   t.forEach (_ => c++)
@@ -95,9 +58,59 @@ function isSorted (iterable, cmp = AATree.defaultCompare) {
   return true
 }
 
+
+// Run Tests
+// ---------
+
+log ('AATree Tests\n')
+
+let t = new AATree ()
+let r = new ReferenceDict ()
+const slog = _ => process.stdout.write (_)
+
+slog ('Inserts... ')
+
+const INSERTS = 1000
+for (let i=0; i<INSERTS; i++) {
+  let k = Math.round (Math.random () * 2000)
+  let v = 'value for ' + k
+  t = t.insert (k, v)
+  r.insert (k, v)
+
+  assert.strictEqual (t.has (k), true)
+  assert.deepStrictEqual (r.get (k), v)
+  assert.deepStrictEqual (t.get (k), v)
+  assert.strictEqual (countSize (t), r.items.length)
+}
+
+assert.deepStrictEqual ([...t], [...r])
+log ('OK')
+
+
+slog ('Removals... ')
+const REMOVES = 500
+for (let i=0; i<REMOVES; i++) {
+  let k = Math.round (Math.random () * 2000)
+  let c = t.select (k)// .next ()
+  if (c) t = c .unset ()
+  r.remove (k)
+
+  assert.equal (t.has (k), false)
+  assert.deepStrictEqual (r.get (k), undefined)
+  assert.deepStrictEqual (t.get (k), undefined)
+  assert.deepStrictEqual (t.lookup (k), { found:false })
+}
+
+assert.deepStrictEqual ([...t], [...r])
+log ('OK')
+
+
+
+slog ('Sort order and size... ')
 assert.strictEqual (isSorted (t), true)
 assert.strictEqual (isSorted (r), true)
 assert.strictEqual (t.size, countSize (t))
 assert.strictEqual (countSize (t), r.items.length)
+log ('OK')
 
-log ('All tests passed')
+log ('\nAll tests passed!\n')
