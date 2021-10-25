@@ -1,20 +1,28 @@
-# Immutable/ Persistent AATree Datastructure
 
- ![Size][size-image] ![Size gzip][size-gzip-image] [![Dependencies][deps-image]][deps-url] [![NPM version][npm-image]][npm-url]
+Immutable/ Persistent AATree Datastructure
+==========================================
+
+[![npm version]][npm-url] ![size] ![gzip size]
 
 An implementation of [Persistent][1] ordered dictionaries via [AA trees][2], 
 with a Cursor API for stepping through and manipulating entries.
 
-**Note** that this is an implementation of ordered dictionaries, where key-value pairs are sorted by a given comparison function on the keys. 
-This is different from ES6 Map objects in several ways, and it has other use cases. 
+<center> ![AATree Image][3] </center>
+
+**Note**: The AATree datastructure is an implementation of a dictionary that is ordered
+by a given _comparison function_ on keys. This is different from ES6 Map objects,
+and it has other use cases.
 
 [1]: https://en.wikipedia.org/wiki/Persistent_data_structure
 [2]: https://en.wikipedia.org/wiki/AA_tree
+[3]: svg/sample.svg
 
-# Example
+
+Example
+-------
 
 ```javascript
-const AATree = require ('immutable-aatree')
+import AATree from 'immutable-aatree'
 const log = console.log.bind (console)
 
 const empty = new AATree (AATree.defaultCompare)
@@ -63,9 +71,12 @@ for (let p of tree5) log (p)
 // [ 5, 'Welcome!' ]
 ```
 
-# API
 
-## Comparison functions
+API
+---
+
+### Comparison functions
+
 Since AATrees implement _ordered_ keyed dictionaries,
 they are parameterized by the order on keys.
 This order is specified by a comparison function, a function
@@ -75,10 +86,10 @@ This order is specified by a comparison function, a function
 - `0` if `k1` and `k2` are to be considered equivalent, and
 - `1` if `k1` is to be considered larger than `k2`.
 
-This is the same kind of comparison functions that JavaScript's built-in `Array.sort` method expects. 
-The static method `AATree.defaultCompare` is a comparison function
+This is the same kind of comparison functions that JavaScript's built-in `Array.sort`
+method expects.  The static method `AATree.defaultCompare` is a comparison function
 that compares values on their type first and uses javascripts built-in
-comparison operators id the type is equal. 
+comparison operators if the type is equal. 
 
 ```javascript
 const defaultCompare = function (a, b) {
@@ -86,9 +97,11 @@ const defaultCompare = function (a, b) {
   return ta < tb ? -1 : ta > tb ? 1 : a < b ? -1 : a > b ? 1 : 0 }
 ```
 
-## AATree constructor
+### AATree constructor
+
 Given a comparison function `cmp` for keys,
-`new AATree (cmp)` returns an empty AATree object, an object with a single property `size`, reflecting the number of key-value pairs stored in the tree; and the following methods:
+`new AATree (cmp)` returns an empty AATree object, an object with a single property
+`size`, reflecting the number of key-value pairs stored in the tree; and the following methods:
 
 - `has (key)`
 - `get (key)`
@@ -106,48 +119,63 @@ Given a comparison function `cmp` for keys,
 The methods `insert` and `remove` return new AATree objects instead. 
 
 ### Has, Get
-These methods were added to align the API with the built-in Map object of ES6. `has (k)` searches for a key `k` and returns `true` if found and `false` otherwise. `get (k)` searches for a key `k` and returns its value if found, and `undefined` otherwise. If for some reason you store `undefined` values under certain keys you can use the `lookup` method instead to disambiguate. 
+
+These methods were added to align the API with the built-in Map object of ES6.
+`has (k)` searches for a key `k` and returns `true` if found and `false` otherwise.
+`get (k)` searches for a key `k` and returns its value if found, and `undefined` otherwise.
+If for some reason you store `undefined` values under certain keys you can use
+the `lookup` method instead to disambiguate. 
 
 ### Lookup, Search
+
 `lookup (k)` searches for a key `k` and returns an object
 `{ found:true, key:k, value }` if found,
 or `{ found:false }` otherwise. `search` is an alias for `lookup`. 
 
 ### Select
+
 `select (k)` searches for a key `k` and returns a `Cursor` object.
-Cursor objects have methods to step through key-value pairs and to create new AATree objects by setting, and/ or remove key-value pairs from their associated AATree.
+Cursor objects have methods to step through key-value pairs and to create new AATree
+objects by setting, and/ or remove key-value pairs from their associated AATree.
 Cursor objects have members `found:boolean`, `key`, `value`
 and methods `previous`, `next`, `set` and `unset`.
 
 ### Insert
+
 `insert (k1, v1, ... kn, vn)` inserts an arbitrary number of
 key value pairs at once and returns a new AATree object.
 Note that for a single pair, `t.insert (k1, v1)` is equivalent to
 `t.select (k1) .set (v1)`.
 
 ### Remove, Delete
+
 `remove (k1, ... kn)` returns a new AATree object by removing the 
 key-value pairs with the specified keys. Note that `t.remove (k1)` is 
 equivalent to `t.select (k1) .unset ()`.
 
 ### ForEach
+
 `forEach (fn)` calls a function `fn (v, k)` for each of the
 key-value pairs `(k, v)` in the AATree in ascending key order.
 
 ### Entries, [Symbol.iterator]
+
 `entries ()` returns a javascript ES6 style iterator object. 
 The key value pairs are iterated as tuples, e.g. arrays `[key, value]`
 in ascending order by key. 
 
 ### Keys
+
 `keys ()` returns a javascript ES6 style iterator object for the
 keys in the AATree in ascending order. 
 
 ### Values
+
 `values ()` returns a javascript ES6 style iterator object for the
 _values_ in the AATree in ascending order of the key under which they are stored. 
 
 ## Cursor constructor
+
 The Cursor constructor is private.
 Cursor objects can be obtained via the public method `select`
 on an AATree object. However, cursors do have public members
@@ -155,26 +183,35 @@ on an AATree object. However, cursors do have public members
 `previous`, `next`, `set` and `unset`.
 
 ### Previous, Prev
+
 `previous ()` returns a new Cursor object by moving the cursor
 to the previous key-value pair in its associated AATree, or
 `null` if no such pair exists. `prev` is an alias for `previous`. 
 
 ### Next
+
 `next ()` returns a new Cursor object by moving the cursor
 to the next key-value pair in its associated AATree, or
 `null` if no such pair exists. 
 
 ### Unset
+
 `unset()` returns a new AATree object by removing the key-value pair
 that the cursor is pointed at from its associated AATree. 
 If `cursor.found` is `false` the original associated AATree is returned. 
 
 ### Set
+
 `set (value)` returns a new AATree object by inserting or updating the
 the key-value pair that the cursor is pointing at in its associated AATree.
 
 
-# Changelog
+Changelog
+---------
+
+- Version 2.0.0:
+  - Converted the project to an ES Module. 
+  - Touch-ups. 
 
 - Version 1.0.0:
   - Some touch-ups. 
@@ -193,15 +230,14 @@ the key-value pair that the cursor is pointing at in its associated AATree.
   - Added an alias `prev` for the `previous` method on `Cursor`. 
 
 
-# License
+License
+-------
 
 MIT License.  
 Enjoy!
 
 
-[npm-image]: https://img.shields.io/npm/v/immutable-aatree.svg
+[NPM version]: https://img.shields.io/npm/v/immutable-aatree.svg
 [npm-url]: https://npmjs.org/package/immutable-aatree
-[deps-image]: https://img.shields.io/david/alwinb/immutable-aatree.svg
-[deps-url]: https://david-dm.org/alwinb/immutable-aatree
-[size-image]: http://img.badgesize.io/alwinb/immutable-aatree/master/lib/aatree.js
-[size-gzip-image]: http://img.badgesize.io/alwinb/immutable-aatree/master/lib/aatree.js?compression=gzip
+[size]: http://img.badgesize.io/alwinb/immutable-aatree/master/lib/aatree.js
+[gzip size]: http://img.badgesize.io/alwinb/immutable-aatree/master/lib/aatree.js?compression=gzip
