@@ -1,5 +1,5 @@
 const log = console.log.bind (console)
-module.exports = { Canvas, viz }
+export { Canvas, viz }
 
 // Geometry
 // --------
@@ -90,7 +90,22 @@ const style = `<style>
   svg .node { fill:white; }
 </style>\n`
 
-function viz (aatree, out = process.stdout) {
+
+class Writable {
+  constructor () {
+    this.parts = []
+  }
+  write (part) {
+    this.parts.push (part)
+  }
+  get result () {
+    if (this.parts.length !== 1)
+      this.parts = [this.parts.join ('')]
+    return this.parts[0]
+  }
+}
+
+function viz (aatree, out = new Writable ()) {
 
   const C = new Canvas ()
   let _x = 0
@@ -143,4 +158,6 @@ function viz (aatree, out = process.stdout) {
   out.write (style)
   for (let x of C.render())
     out.write (x)
+  
+  return out
 }
