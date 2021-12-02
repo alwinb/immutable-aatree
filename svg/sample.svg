@@ -1,0 +1,62 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  version="1.1"
+  viewBox="-24.5 -169.5 336 169"
+  width="336"
+  height="169">
+
+  <style><![CDATA[
+    rect { stroke:#0ec6; fill:none; }
+    path { fill:none; stroke:black; }
+    text { text-anchor:middle; fill:black; }
+    .nodes > path { fill:white; }
+  ]]></style>
+
+  <g class="lines">
+    <path d="M 24 -88 L 0 -60"></path>
+	  <path d="M 24 -88 L 48 -60"></path>
+  	<path d="M 168 -88 L 144 -60"></path>
+  	<path d="M 168 -88 L 192 -60"></path>
+  	<path d="M 120 -88 L 96 -60"></path>
+  	<path d="M 120 -93 L 168 -93"></path>
+  	<path d="M 264 -88 L 240 -60"></path>
+  	<path d="M 264 -88 L 288 -60"></path>
+  	<path d="M 192 -144 L 120 -108"></path>
+  	<path d="M 192 -144 L 264 -108"></path>
+  	<path d="M 96 -144 L 24 -108"></path>
+  	<path d="M 96 -149 L 192 -149"></path>
+  </g>
+
+  <g class="nodes">
+  	<path transform="translate(0 -40)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(48 -40)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(24 -88)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(96 -40)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(144 -40)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(192 -40)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(168 -88)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(120 -88)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(240 -40)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(288 -40)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(264 -88)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(192 -144)" d="M-16 -20 h32 v30 h-32 z"></path>
+  	<path transform="translate(96 -144)" d="M-16 -20 h32 v30 h-32 z"></path>
+  </g>
+
+  <g class="labels">
+  	<text x="0" y="-41.3">1</text>
+  	<text x="48" y="-41.3">3</text>
+  	<text x="24" y="-89.3">2</text>
+  	<text x="96" y="-41.3">5</text>
+  	<text x="144" y="-41.3">7</text>
+  	<text x="192" y="-41.3">9</text>
+  	<text x="168" y="-89.3">8</text>
+  	<text x="120" y="-89.3">6</text>
+  	<text x="240" y="-41.3">11</text>
+  	<text x="288" y="-41.3">13</text>
+  	<text x="264" y="-89.3">12</text>
+  	<text x="192" y="-145.3">10</text>
+  	<text x="96" y="-145.3">4</text>
+  </g>
+
+</svg>

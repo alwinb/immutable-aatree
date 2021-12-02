@@ -1,8 +1,9 @@
 {
   "name": "immutable-aatree",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Persistent AAtree datastructure",
   "main": "lib/aatree.js",
+  "type": "module",
   "scripts": {
     "test": "node test/test.js"
   },

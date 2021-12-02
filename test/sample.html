@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AATree</title>
+  <style>
+    html { font-family:Sans-Serif; }
+    body { margin:1rem 2rem; width:26rem; }
+    svg { margin:0; font-size:12px; padding:1rem; display:block; }
+  </style>
+</head>
+<body>
+
+<h1>AATree Example</h1>
+
+<script type=module>
+
+  import AATree from '../lib/aatree.js'
+  import { viz } from './layout.js'
+  const log = console.log.bind (console)
+
+
+  // Sample tree
+  // ===========
+
+  // This is the example from the AATree paper.
+  // NB manually creating the internal tree and passing it as the second 
+  // argument to the AATree constructor is for internal testing only, 
+  // it is not a supported / public API.
+
+  function createSampleTree () {
+    const { Node, Empty:EMPTY } = AATree.core
+    const t13 = Node (13, 'v13', 1, EMPTY, EMPTY)
+  	const t11 = Node (11, 'v11', 1, EMPTY, EMPTY)
+  	const t12 = Node (12, 'v12', 2, t11, t13)
+  	const t9  = Node (9,  'v9',  1, EMPTY, EMPTY)
+  	const t7  = Node (7,  'v7',  1, EMPTY, EMPTY)
+  	const t8  = Node (8,  'v8',  2, t7, t9)
+  	const t5  = Node (5,  'v5',  1, EMPTY, EMPTY)
+  	const t6  = Node (6,  'v6',  2, t5, t8)
+  	const t3  = Node (3,  'v3',  1, EMPTY, EMPTY)
+  	const t1  = Node (1,  'v1',  1, EMPTY, EMPTY)
+  	const t2  = Node (2,  'v2',  2, t1, t3)
+  	const t10 = Node (10, 'v10', 3, t6, t12)
+  	const t4  = Node (4,  'v4',  3, t2, t10)
+    return new AATree (AATree.defaultCompare, t4)
+  }
+
+  // Main
+  // ----
+
+  function show (code, tree) {
+    const div = document.createElement ('DIV')
+    const code_ = document.createElement ('CODE')
+      code_.append (code)
+    const fig = document.createElement ('DIV')
+    fig.innerHTML = viz (tree) .result
+    div.append (code_, fig)
+    document.body.append (div)
+  }
+
+  var tree0 = createSampleTree ()
+  show ('var tree0 = createSampleTree ()', tree0)
+
+  var tree1 = tree0 .select (1) .unset ()
+  show ('var tree1 = tree0 .select (1) .unset ()', tree1)
+
+  var tree2 = tree1 .select (2) .unset ()
+  show ('var tree2 = tree1 .select (2) .unset ()', tree2)
+  
+  var tree3 = tree1 .select (3) .unset ()
+  show ('var tree3 = tree1 .select (3) .unset ()', tree3)
+
+  var tree4 = tree1 .select (4) .unset ()
+  show ('var tree4 = tree1 .select (4) .unset ()', tree4)
+
+  var tree5 = tree4 .select (21) .set ("v21")
+  show ('var tree5 = tree4 .select (21) .set ("v21")', tree5)
+
+  var tree6 = tree5 .select (23) .set ("v23")
+  show ('var tree6 = tree5 .select (23) .set ("v23")', tree6)
+
+  var tree7 = tree6 .select (21) .previous () .unset ()
+  show ('var tree7 = tree6 .select (21) .previous() .unset ()', tree7)
+
+</script>
+</body>
+</html>

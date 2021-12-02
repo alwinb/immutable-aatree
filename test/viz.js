@@ -1,5 +1,5 @@
-const AATree = require('../lib/aatree')
-const viz = require('./layout').viz
+import AATree from '../lib/aatree.js'
+import { viz } from './layout.js'
 const log = console.log.bind (console)
 
 let t = new AATree ()

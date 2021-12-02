@@ -1,4 +1,4 @@
-var AATree = require ('../lib/aatree')
+import AATree from '../lib/aatree.js'
 const log = console.log.bind (console)
 
 var empty = new AATree (AATree.defaultCompare)

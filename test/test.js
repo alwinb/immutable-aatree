@@ -1,6 +1,6 @@
-const AATree = require('../lib/aatree')
-  , log = console.log.bind (console)
-  , assert = require ('assert')
+import AATree from '../lib/aatree.js'
+import * as assert from 'assert'
+const log = console.log.bind (console)
 
 
 class ReferenceDict {
